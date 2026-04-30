@@ -2,7 +2,7 @@
 
 Estrutura para subir um ambiente local com:
 
-- API .NET do BankingHub
+- API .NET do HubBancario
 - WireMock simulando endpoints Pix do Itaú
 - PostgreSQL
 - RabbitMQ

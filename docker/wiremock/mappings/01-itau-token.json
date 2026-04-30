@@ -1,1 +1,18 @@
-
+{
+  "request": {
+    "method": "POST",
+    "urlPathPattern": "/oauth2/token|/oauth/token|/token"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "access_token": "mock-access-token-itau",
+      "token_type": "Bearer",
+      "expires_in": 3600,
+      "scope": "cob.read cob.write cobv.read cobv.write pix.read"
+    }
+  }
+}

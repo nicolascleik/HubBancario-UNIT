@@ -1,1 +1,16 @@
-
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/(cobv|cob)/ERRO.*"
+  },
+  "response": {
+    "status": 500,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "error": "Erro interno simulado no banco Itaú",
+      "message": "Mock para testar BankIntegrationException"
+    }
+  }
+}

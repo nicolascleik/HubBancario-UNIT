@@ -1,0 +1,24 @@
+{
+  "request": {
+    "method": "PUT",
+    "urlPathPattern": "/cobv/[A-Za-z0-9]+"
+  },
+  "response": {
+    "status": 201,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "txid": "{{request.pathSegments.[1]}}",
+      "status": "ATIVA",
+      "calendario": {
+        "dataDeVencimento": "2026-12-31"
+      },
+      "valor": {
+        "original": "150.00"
+      },
+      "chave": "mock-chave-pix-itau",
+      "solicitacaoPagador": "Cobrança Pix criada pelo mock Itaú"
+    }
+  }
+}

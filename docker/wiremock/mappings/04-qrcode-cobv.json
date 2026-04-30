@@ -1,1 +1,18 @@
-
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/cobv/[A-Za-z0-9]+/qrcode|/qrcode/[A-Za-z0-9]+"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "txid": "{{request.pathSegments.[1]}}",
+      "emv": "00020101021226860014br.gov.bcb.pix2564mock.itau.com.br/pix/{{request.pathSegments.[1]}}5204000053039865406150.005802BR5913RECEBA DIGITAL6009SAO PAULO62070503***6304ABCD",
+      "pixCopiaECola": "00020101021226860014br.gov.bcb.pix2564mock.itau.com.br/pix/{{request.pathSegments.[1]}}5204000053039865406150.005802BR5913RECEBA DIGITAL6009SAO PAULO62070503***6304ABCD",
+      "location": "https://mock.itau.com.br/pix/{{request.pathSegments.[1]}}"
+    }
+  }
+}

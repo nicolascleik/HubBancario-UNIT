@@ -10,7 +10,7 @@ Estrutura para subir um ambiente local com:
 
 ## Como usar
 
-Coloque esta pasta `docker` na raiz do projeto, no mesmo nível de `src/`.
+Coloque esta pasta `docker` na raiz do projeto, no mesmo nível de `HubBancario/`.
 
 ```bash
 cd docker

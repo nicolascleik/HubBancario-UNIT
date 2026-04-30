@@ -1,1 +1,24 @@
-
+{
+  "scenarioName": "fluxo-pagamento-pix",
+  "requiredScenarioState": "COBRANCA_CONSULTADA_UMA_VEZ",
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/(cobv|cob)/[A-Za-z0-9]+"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "status": "CONCLUIDA",
+      "pix": [
+        {
+          "valor": "150.00",
+          "horario": "2026-04-26T10:00:00Z",
+          "endToEndId": "E123456789MOCKITAU20260426100000"
+        }
+      ]
+    }
+  }
+}

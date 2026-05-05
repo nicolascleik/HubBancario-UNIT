@@ -7,7 +7,7 @@ Estrutura para subir um ambiente local com:
 - PostgreSQL
 - RabbitMQ
 - PgAdmin
-
+.
 ## Como usar
 
 Coloque esta pasta `docker` na raiz do projeto, no mesmo nível de `HubBancario/`.

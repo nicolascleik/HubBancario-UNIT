@@ -1,16 +1,32 @@
 ﻿using System;
+using HubBancario.Domain.Exceptions;
 
 namespace HubBancario.Domain.ValueObjects
 {
-    public class Money
+    public sealed record Money
     {
-        public decimal Value { get; init; }
-        public string Currency { get; init; }
+        public decimal Value { get; }
+        public string Currency { get; }
 
-        public Money(decimal value, string currency = "BRL")
+        private Money(decimal value, string currency)
         {
-            throw new NotImplementedException("Lógica de validação de moeda e valor pendente.");
+            Value = value;
+            Currency = currency;
         }
+
+        public static Money BRL(decimal value)
+        {
+            if (value < 0)
+                throw new DomainException("O valor monetário não pode ser negativo.");
+
+            return new Money(Math.Round(value, 2), "BRL");
+        }
+
+        public static bool operator >(Money a, Money b) => a.Value > b.Value;
+        public static bool operator <(Money a, Money b) => a.Value < b.Value;
+        public static bool operator >=(Money a, Money b) => a.Value >= b.Value;
+        public static bool operator <=(Money a, Money b) => a.Value <= b.Value;
+
+        public override string ToString() => $"{Currency} {Value:N2}";
     }
 }
-

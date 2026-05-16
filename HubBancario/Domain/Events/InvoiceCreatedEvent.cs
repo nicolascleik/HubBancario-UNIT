@@ -1,13 +1,17 @@
 ﻿using System;
+using MediatR;
 using HubBancario.Domain.ValueObjects;
 
 namespace HubBancario.Domain.Events
 {
-    public record InvoiceCreatedEvent(Guid InvoiceId, Money Amount, DateTime CreatedAt)
-    {
-        public InvoiceCreatedEvent() : this(Guid.Empty, null, DateTime.MinValue)
-        {
-        }
-    }
+    /// <summary>
+    /// Evento disparado quando uma nova fatura (Invoice) é criada com sucesso.
+    /// </summary>
+    public sealed record InvoiceCreatedEvent(
+        Guid InvoiceId,
+        Guid AccountId,
+        Money Amount,
+        DateTime DueDate,
+        string ExternalReference
+    ) : INotification;
 }
-

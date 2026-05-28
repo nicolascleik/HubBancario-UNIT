@@ -1,6 +1,0 @@
-@HubBancario_HostAddress = http://localhost:5263
-
-GET {{HubBancario_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

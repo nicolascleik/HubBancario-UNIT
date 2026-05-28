@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/(cobv|cob)/EXPIRADA.*"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "status": "EXPIRADA"
+    }
+  }
+}

@@ -1,0 +1,70 @@
+services:
+  api:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    container_name: bankinghub-api
+    ports:
+      - "5000:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=bankinghub;Username=admin;Password=admin
+      ConnectionStrings__HangfireConnection: Host=postgres;Port=5432;Database=bankinghub;Username=admin;Password=admin
+      # Hierarquia corrigida para dar match exato com o IOptions<ItauOptions>
+      BankAdapters__Itau__BaseUrl: http://mock-bank:8080
+      BankAdapters__Itau__ClientId: mock-client-id
+      BankAdapters__Itau__ClientSecret: mock-client-secret
+      RabbitMq__Host: rabbitmq
+      RabbitMq__Port: "5672"
+      RabbitMq__User: guest
+      RabbitMq__Password: guest
+    depends_on:
+      - postgres
+      - rabbitmq
+      - mock-bank
+    networks:
+      - bankinghub-network
+
+  mock-bank:
+    image: wiremock/wiremock:latest
+    container_name: mock-bank-itau
+    ports:
+      - "8080:8080"
+    volumes:
+      # Como a pasta wiremock agora está na raiz junto com o compose, o caminho relativo ./wiremock está correto
+      - ./wiremock/mappings:/home/wiremock/mappings
+      - ./wiremock/__files:/home/wiremock/__files
+    command: --global-response-templating --verbose
+    networks:
+      - bankinghub-network
+
+  postgres:
+    image: postgres:16
+    container_name: bankinghub-postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: bankinghub
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - bankinghub-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: bankinghub-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - bankinghub-network
+
+networks:
+  bankinghub-network:
+    driver: bridge
+
+volumes:
+  postgres-data:

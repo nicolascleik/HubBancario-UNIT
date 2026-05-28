@@ -1,0 +1,18 @@
+{
+  "scenarioName": "fluxo-pagamento-pix",
+  "requiredScenarioState": "Started",
+  "newScenarioState": "COBRANCA_CONSULTADA_UMA_VEZ",
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/(cobv|cob)/[A-Za-z0-9]+"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "status": "ATIVA"
+    }
+  }
+}

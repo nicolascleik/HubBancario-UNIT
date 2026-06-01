@@ -219,7 +219,7 @@ DELETE {id}
 POST /pix
 ```
 
-> Consulte a documentação OpenAPI/Swagger para visualizar os endpoints completos e contratos atualizados.
+
 
 ---
 

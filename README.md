@@ -4,9 +4,9 @@
 
 O **BankingHub** é uma plataforma de integração bancária desenvolvida para centralizar operações Pix dentro do ecossistema **Open Banking/Open Finance brasileiro**.
 
-O projeto foi concebido seguindo o princípio **API First**, permitindo que qualquer aplicação consuma serviços bancários através de uma interface única, padronizada e desacoplada das implementações específicas de cada instituição financeira. :contentReference[oaicite:1]{index=1}
+O projeto foi concebido seguindo o princípio **API First**, permitindo que qualquer aplicação consuma serviços bancários através de uma interface única, padronizada e desacoplada das implementações específicas de cada instituição financeira. 
 
-A arquitetura foi projetada para minimizar lock-in tecnológico, garantir auditabilidade completa das operações e permitir a inclusão de novos bancos sem impacto nas regras centrais de negócio. Atualmente, o Itaú é o primeiro provedor implementado através do padrão Adapter. :contentReference[oaicite:2]{index=2}
+A arquitetura foi projetada para minimizar lock-in tecnológico, garantir auditabilidade completa das operações e permitir a inclusão de novos bancos sem impacto nas regras centrais de negócio. Atualmente, o Itaú é o primeiro provedor implementado através do padrão Adapter. 
 
 ---
 
@@ -39,7 +39,7 @@ O projeto foi projetado seguindo os seguintes princípios arquiteturais:
 - Factory Pattern
 - Strategy Pattern
 
-Esses padrões garantem separação de responsabilidades, alta testabilidade, facilidade de manutenção e expansão futura para novos provedores bancários. :contentReference[oaicite:3]{index=3}
+Esses padrões garantem separação de responsabilidades, alta testabilidade, facilidade de manutenção e expansão futura para novos provedores bancários. 
 
 ---
 
@@ -138,19 +138,19 @@ HubBancario-UNIT
 
 Os webhooks recebidos dos bancos funcionam apenas como gatilhos para iniciar o processo de validação.
 
-A confirmação definitiva de um pagamento ocorre exclusivamente através de consulta ativa ao banco emissor. :contentReference[oaicite:4]{index=4}
+A confirmação definitiva de um pagamento ocorre exclusivamente através de consulta ativa ao banco emissor. 
 
 ### TxId como Chave de Conciliação
 
-Todo pagamento Pix é reconciliado utilizando o **TxId** como identificador universal entre os sistemas. :contentReference[oaicite:5]{index=5}
+Todo pagamento Pix é reconciliado utilizando o **TxId** como identificador universal entre os sistemas. 
 
 ### Idempotência por Design
 
-O sistema foi projetado para suportar eventos duplicados, atrasados ou fora de ordem sem gerar efeitos colaterais indesejados. :contentReference[oaicite:6]{index=6}
+O sistema foi projetado para suportar eventos duplicados, atrasados ou fora de ordem sem gerar efeitos colaterais indesejados. 
 
 ### Auditoria Completa
 
-As integrações bancárias são projetadas para permitir rastreabilidade completa de requests e responses trocados com as instituições financeiras. :contentReference[oaicite:7]{index=7}
+As integrações bancárias são projetadas para permitir rastreabilidade completa de requests e responses trocados com as instituições financeiras. 
 
 ---
 

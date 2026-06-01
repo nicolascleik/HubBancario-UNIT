@@ -250,7 +250,7 @@ Suba o ambiente:
 docker compose up --build
 ```
 
-Após a inicialização, consulte a documentação OpenAPI/Swagger disponível na aplicação.
+
 
 ---
 

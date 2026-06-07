@@ -124,8 +124,8 @@ namespace HubBancario.Infrastructure.BankAdapters.Itau
             {
                 KeyValue = keyValue,
                 KeyType = DetectPixKeyType(keyValue),
-                OwnerName = "Cliente Mock Itaú",
-                OwnerDocument = "***.123.456-**",
+                OwnerName = "Titular não informado",
+                OwnerDocument = string.Empty,
                 BankName = "Itaú",
                 BankId = "ITAU",
                 IsActive = true

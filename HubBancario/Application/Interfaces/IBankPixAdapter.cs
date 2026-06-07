@@ -7,5 +7,6 @@ namespace HubBancario.Application.Interfaces
     {
         Task<ChargeResponseDto> GeneratePixAsync(ChargeRequestDto request);
         Task<string> CheckStatusAsync(string txId);
+        Task<PixKeyInfoDto> GetPixKeyAsync(string keyValue);
     }
 }

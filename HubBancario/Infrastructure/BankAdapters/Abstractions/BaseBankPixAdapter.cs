@@ -16,5 +16,6 @@ namespace HubBancario.Infrastructure.BankAdapters.Abstractions
 
         public abstract Task<ChargeResponseDto> GeneratePixAsync(ChargeRequestDto request);
         public abstract Task<string> CheckStatusAsync(string txId);
+        public abstract Task<PixKeyInfoDto> GetPixKeyAsync(string keyValue);
     }
 }

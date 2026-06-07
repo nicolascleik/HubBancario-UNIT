@@ -9,6 +9,7 @@ using HubBancario.Application.DTOs;
 using HubBancario.Infrastructure.BankAdapters.Abstractions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Linq;
 
 namespace HubBancario.Infrastructure.BankAdapters.Itau
 {

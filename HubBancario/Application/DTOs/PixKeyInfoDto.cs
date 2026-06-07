@@ -8,6 +8,6 @@ namespace HubBancario.Application.DTOs
         public string? OwnerDocument { get; set; }
         public string? BankName { get; set; }
         public string? BankId { get; set; }
-        public string Status { get; set; } = "ACTIVE";
+        public bool IsActive { get; set; }
     }
 }

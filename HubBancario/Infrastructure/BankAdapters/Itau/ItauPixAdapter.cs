@@ -112,5 +112,46 @@ namespace HubBancario.Infrastructure.BankAdapters.Itau
                 return "PAID"; 
             }
         }
+
+        public override async Task<PixKeyInfoDto> GetPixKeyAsync(string keyValue)
+        {
+            _logger.LogInformation("Consultando chave Pix no Itaú. KeyValue: {KeyValue}", keyValue);
+
+            await Task.Delay(300);
+
+            return new PixKeyInfoDto
+            {
+                KeyValue = keyValue,
+                KeyType = DetectPixKeyType(keyValue),
+                OwnerName = "Cliente Mock Itaú",
+                OwnerDocument = "***.123.456-**",
+                BankName = "Itaú",
+                BankId = "ITAU",
+                IsActive = true
+            };
+        }
+
+        private static string DetectPixKeyType(string keyValue)
+        {
+            if (string.IsNullOrWhiteSpace(keyValue))
+                return "UNKNOWN";
+
+            if (keyValue.Contains("@"))
+                return "EMAIL";
+
+            if (keyValue.StartsWith("+55"))
+                return "PHONE";
+
+            if (keyValue.Length == 11 && keyValue.All(char.IsDigit))
+                return "CPF";
+
+            if (keyValue.Length == 14 && keyValue.All(char.IsDigit))
+                return "CNPJ";
+
+            if (keyValue.Length is 10 or 11)
+                return "PHONE";
+
+            return "EVP";
+        }
     }
 }

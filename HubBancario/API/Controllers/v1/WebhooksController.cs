@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace HubBancario.API.Controllers
+namespace HubBancario.API.Controllers.v1
 {
     [ApiController]
-    [Route("api/webhooks")]
+    [Route("api/v1/webhooks")]
     [Produces("application/json")]
     public class WebhooksController : ControllerBase
     {

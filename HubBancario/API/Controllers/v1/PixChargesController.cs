@@ -6,10 +6,10 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HubBancario.API.Controllers
+namespace HubBancario.API.Controllers.v1
 {
     [ApiController]
-    [Route("api/pix-charges")]
+    [Route("api/v1/pix-charges")]
     [Produces("application/json")]
     public class PixChargesController : ControllerBase
     {

@@ -11,7 +11,6 @@ services:
       ASPNETCORE_URLS: http://+:8080
       ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=bankinghub;Username=admin;Password=admin
       ConnectionStrings__HangfireConnection: Host=postgres;Port=5432;Database=bankinghub;Username=admin;Password=admin
-      # Hierarquia corrigida para dar match exato com o IOptions<ItauOptions>
       BankAdapters__Itau__BaseUrl: http://mock-bank:8080
       BankAdapters__Itau__ClientId: mock-client-id
       BankAdapters__Itau__ClientSecret: mock-client-secret
@@ -20,9 +19,12 @@ services:
       RabbitMq__User: guest
       RabbitMq__Password: guest
     depends_on:
-      - postgres
-      - rabbitmq
-      - mock-bank
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+      mock-bank:
+        condition: service_started
     networks:
       - bankinghub-network
 
@@ -32,7 +34,6 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      # Como a pasta wiremock agora está na raiz junto com o compose, o caminho relativo ./wiremock está correto
       - ./wiremock/mappings:/home/wiremock/mappings
       - ./wiremock/__files:/home/wiremock/__files
     command: --global-response-templating --verbose
@@ -50,6 +51,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d bankinghub"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - bankinghub-network
 

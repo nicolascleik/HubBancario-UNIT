@@ -8,16 +8,18 @@ namespace HubBancario.Application.Queries.PixKey
 {
     public class GetPixKeyInfoHandler : IRequestHandler<GetPixKeyInfoQuery, PixKeyInfoDto>
     {
-        private readonly IBankPixAdapter _bankPixAdapter;
+        private readonly IBankAdapterFactory _bankAdapterFactory;
 
-        public GetPixKeyInfoHandler(IBankPixAdapter bankPixAdapter)
+        public GetPixKeyInfoHandler(IBankAdapterFactory bankAdapterFactory)
         {
-            _bankPixAdapter = bankPixAdapter;
+            _bankAdapterFactory = bankAdapterFactory;
         }
 
         public async Task<PixKeyInfoDto> Handle(GetPixKeyInfoQuery request, CancellationToken cancellationToken)
         {
-            return await _bankPixAdapter.GetPixKeyAsync(request.KeyValue);
+            var adapter = _bankAdapterFactory.GetAdapter("ITAU");
+
+            return await adapter.GetPixKeyAsync(request.KeyValue);
         }
     }
 }

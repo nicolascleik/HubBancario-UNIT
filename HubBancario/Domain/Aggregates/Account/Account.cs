@@ -56,4 +56,12 @@ public class Account
         if (!IsActive) throw new DomainException("Esta conta já está inativa.");
         IsActive = false;
     }
+
+    public void ChangeStatus(bool isActive)
+    {
+        if (IsActive == isActive) 
+            throw new DomainException($"A conta já está {(isActive ? "ativa" : "inativa")}.");
+            
+        IsActive = isActive;
+    }
 }

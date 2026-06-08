@@ -21,13 +21,11 @@ namespace HubBancario.Application.Queries.Account
 
         public async Task<AccountDto> Handle(GetAccountByIdQuery request, CancellationToken cancellationToken)
         {
-            // Busca o agregado rico do Domínio
             var account = await _accountRepository.GetByIdAsync(request.Id);
 
             if (account == null)
                 return null;
 
-            // Mapeia de forma segura para o DTO plano que vai para a API
             return _mapper.Map<AccountDto>(account);
         }
     }

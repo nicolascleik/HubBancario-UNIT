@@ -1,8 +1,10 @@
 using System;
 using System.Threading.Tasks;
 using HubBancario.Application.Commands.Account.CreateAccount;
-using HubBancario.Application.Commands.Account.DeleteAccount;
+using HubBancario.Application.Commands.Account.ChangeAccountStatus; 
 using HubBancario.Application.Commands.Account.UpdateAccount;
+using HubBancario.Application.Queries.Account;
+using HubBancario.Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,8 +33,24 @@ namespace HubBancario.API.Controllers
         {
             var id = await _mediator.Send(command);
             
-            // Retorna o HTTP 201 Created indicando onde o recurso foi gerado
-            return CreatedAtAction(nameof(Create), new { id }, new { Id = id });
+            return CreatedAtAction(nameof(Get), new { id = id }, new { Id = id });
+        }
+
+        /// <summary>
+        /// Consulta os dados de uma conta específica.
+        /// </summary>
+        [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(AccountDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var query = new GetAccountByIdQuery(id);
+            var result = await _mediator.Send(query);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
 
         /// <summary>
@@ -44,7 +62,6 @@ namespace HubBancario.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateAccountCommand command)
         {
-            // Defesa básica de borda para garantir integridade do ID da rota
             if (id != command.Id)
             {
                 return BadRequest(new ProblemDetails
@@ -56,19 +73,29 @@ namespace HubBancario.API.Controllers
             }
 
             await _mediator.Send(command);
-            return NoContent(); // Padrão REST para atualizações bem-sucedidas sem retorno de corpo
+            return NoContent();
         }
 
         /// <summary>
-        /// Realiza a desativação ou remoção lógica da conta lojista.
+        /// Altera o status da conta (Ativa ou Inativa). Substitui a exclusão física (Delete).
         /// </summary>
-        [HttpDelete("{id:guid}")]
+        [HttpPatch("{id:guid}/status")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> ChangeStatus(Guid id, [FromBody] ChangeAccountStatusCommand command)
         {
-            await _mediator.Send(new DeleteAccountCommand { Id = id });
+            if (id != command.Id)
+            {
+                return BadRequest(new ProblemDetails
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Title = "Inconsistência de Dados",
+                    Detail = "O ID fornecido na URL do endpoint não corresponde ao ID enviado no corpo do payload JSON."
+                });
+            }
+
+            await _mediator.Send(command);
             return NoContent();
         }
     }

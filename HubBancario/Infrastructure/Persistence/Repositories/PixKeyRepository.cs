@@ -29,6 +29,11 @@ namespace HubBancario.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
+        public async Task<PixKey> GetByKeyValueAsync(string keyValue)
+        {
+            return await _context.PixKeys.FirstOrDefaultAsync(x => x.KeyValue == keyValue);
+        }
+
         public async Task AddAsync(PixKey pixKey)
         {
             await _context.PixKeys.AddAsync(pixKey);
@@ -42,10 +47,10 @@ namespace HubBancario.Infrastructure.Persistence.Repositories
 
         public Task DeleteAsync(PixKey pixKey)
         {
-            // Implementação de exclusão física (Hard Delete). 
-            // Lembrando que a exclusão lógica (Soft Delete) já é tratada pelo UpdateAsync.
             _context.PixKeys.Remove(pixKey);
             return Task.CompletedTask;
         }
+
+
     }
 }

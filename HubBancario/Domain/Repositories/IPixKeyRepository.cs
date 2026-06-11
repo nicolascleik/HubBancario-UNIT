@@ -12,5 +12,6 @@ namespace HubBancario.Domain.Repositories
         Task AddAsync(PixKey pixKey);
         Task UpdateAsync(PixKey pixKey);
         Task DeleteAsync(PixKey pixKey);
+        Task<PixKey> GetByKeyValueAsync(string keyValue);
     }
 }

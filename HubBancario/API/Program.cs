@@ -1,11 +1,13 @@
 using HubBancario.API.Extensions;
 using HubBancario.API.Middleware;
 using HubBancario.Infrastructure.Persistence; 
+using HubBancario.Infrastructure.Messaging.RabbitMQ;
 using Microsoft.EntityFrameworkCore; 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApiServices(builder.Configuration);
+builder.Services.AddHostedService<WebhookConsumerWorker>();
 
 var app = builder.Build();
 

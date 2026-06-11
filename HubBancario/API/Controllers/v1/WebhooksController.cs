@@ -31,15 +31,13 @@ namespace HubBancario.API.Controllers.v1
         [HttpPost("pix")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ReceivePixWebhook()
+        public async Task<IActionResult> ReceivePixWebhook([FromBody] System.Text.Json.JsonElement payload)
         {
             _logger.LogInformation("Webhook recebido na porta de entrada do Hub Bancário.");
 
-            // 1. Extrai o payload bruto (string JSON) enviado pelo banco parceiro
-            using var reader = new StreamReader(Request.Body);
-            var rawJson = await reader.ReadToEndAsync();
+            var rawJson = payload.GetRawText();
 
-            if (string.IsNullOrWhiteSpace(rawJson))
+            if (string.IsNullOrWhiteSpace(rawJson) || rawJson == "{}")
             {
                 _logger.LogWarning("Requisição de Webhook rejeitada: O corpo (body) enviado estava vazio.");
                 return BadRequest(new ProblemDetails
@@ -52,12 +50,8 @@ namespace HubBancario.API.Controllers.v1
 
             _logger.LogDebug("Payload bruto capturado com sucesso. Tamanho: {Length} caracteres.", rawJson.Length);
 
-            // 2. Despacha o JSON de forma ultra rápida para a fila 'webhook_events_queue' do RabbitMQ
-            // Isso desacopla a API e impede que flutuações de carga derrubem o sistema
             await _messageQueueService.EnqueueWebhookEventAsync(rawJson);
 
-            // 3. Responde imediatamente ao banco. O padrão 202 (Accepted) é o mais correto RESTful 
-            // para indicar que a requisição foi aceita para processamento assíncrono.
             return Accepted();
         }
     }

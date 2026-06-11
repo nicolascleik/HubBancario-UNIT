@@ -9,7 +9,7 @@ namespace HubBancario.Domain.Aggregates.Account;
 public class ClientSecret
 {
     public Guid Id { get; private set; }
-    public Guid ClientId { get; private set; }
+    public Guid AccountId { get; private set; }
     public string SecretValue { get; private set; }
     public string Certificate { get; private set; }
     public string CertificatePassword { get; private set; }
@@ -17,9 +17,9 @@ public class ClientSecret
 
     protected ClientSecret() { }
 
-    public static ClientSecret Create(Guid clientId, string secretValue, string certificate, string certificatePassword)
+    public static ClientSecret Create(Guid accountId, string secretValue, string certificate, string certificatePassword)
     {
-        if (clientId == Guid.Empty) throw new DomainException("O ClientId é obrigatório.");
+        if (accountId == Guid.Empty) throw new DomainException("O AccountId é obrigatório.");
         if (string.IsNullOrWhiteSpace(secretValue)) throw new DomainException("O SecretValue é obrigatório.");
         if (string.IsNullOrWhiteSpace(certificate)) throw new DomainException("O Certificado é obrigatório.");
         if (string.IsNullOrWhiteSpace(certificatePassword)) throw new DomainException("A Senha do Certificado é obrigatória.");
@@ -27,7 +27,7 @@ public class ClientSecret
         return new ClientSecret
         {
             Id = Guid.NewGuid(),
-            ClientId = clientId,
+            AccountId = accountId,
             SecretValue = secretValue,
             Certificate = certificate,
             CertificatePassword = certificatePassword,

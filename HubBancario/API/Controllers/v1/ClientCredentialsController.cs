@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using HubBancario.Application.Commands.ClientSecret.RevokeClientSecret;
+using HubBancario.Application.Commands.ClientSecret.CreateClientSecret;
 using HubBancario.Application.Queries.ClientCredential;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -67,6 +68,15 @@ namespace HubBancario.API.Controllers.v1
 
             // Retorna 204 No Content, pois a credencial foi revogada com sucesso
             return NoContent();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Create([FromBody] CreateClientSecretCommand command)
+        {
+            var id = await _mediator.Send(command);
+            return CreatedAtAction(nameof(GetById), new { id }, new { Id = id });
         }
     }
 }

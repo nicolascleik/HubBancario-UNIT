@@ -14,8 +14,8 @@ namespace HubBancario.Infrastructure.Persistence.Configurations
             builder.Property(x => x.Id)
                 .HasColumnName("id");
 
-            // Mapeia a propriedade 'ClientId' do domínio para a coluna 'account_id' do PostgreSQL
-            builder.Property(x => x.ClientId)
+            // Mapeia a propriedade 'AccountId' do domínio para a coluna 'account_id' do PostgreSQL
+            builder.Property(x => x.AccountId)
                 .HasColumnName("account_id")
                 .IsRequired();
 
@@ -41,10 +41,10 @@ namespace HubBancario.Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             // Relacionamento: O segredo pertence a uma conta cadastrada no Hub
-            builder.HasOne<Account>()
-                .WithMany()
-                .HasForeignKey(x => x.ClientId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //builder.HasOne<Account>()
+            //    .WithMany()
+            //    .HasForeignKey(x => x.AccountId)
+            //    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

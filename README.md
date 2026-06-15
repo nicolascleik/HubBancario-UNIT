@@ -50,7 +50,7 @@ O projeto foi concebido seguindo o princípio **API First**, permitindo que qual
 
 ### O Cenário Anterior
 
-O sistema anterior operava com responsabilidades distribuídas: a Receba Digital tratava cada integração bancária de forma separada, sem uma camada de abstração unificada. Isso criava fragilidade operacional e dificultava a adição de novos parceiros bancários.
+O modelo original arquitetado pela Receba Digital operava com responsabilidades distribuídas, tratando cada integração bancária de forma descentralizada. O seu nível de complexidade e o volume de microsserviços exigiam uma curva de aprendizado incompatível com o prazo e o escopo do projeto acadêmico.
 
 ### O Novo Modelo
 
